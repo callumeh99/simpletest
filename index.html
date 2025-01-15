@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Vercel App</title>
+  <title>API Call Example</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,15 +15,33 @@
       font-size: 16px;
       cursor: pointer;
     }
+    #response {
+      margin-top: 20px;
+      font-size: 14px;
+      color: green;
+    }
   </style>
 </head>
 <body>
-  <h1>Click the Button</h1>
-  <button id="popup-button">Click Me</button>
+  <h1>Click the Button to Make an API Call</h1>
+  <button id="api-button">Call API</button>
+  <div id="response"></div>
 
   <script>
-    document.getElementById('popup-button').addEventListener('click', () => {
-      alert('Success');
+    document.getElementById('api-button').addEventListener('click', async () => {
+      const apiKey = 'AIzaSyCjSp0n1XURr_VD-JbrVMs2DznikbB791s'; // Your provided API key
+      const apiUrl = `https://api.example.com/data?key=${apiKey}`; // Replace with your actual API endpoint
+
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        document.getElementById('response').innerText = `Success: ${JSON.stringify(data)}`;
+      } catch (error) {
+        document.getElementById('response').innerText = `Error: ${error.message}`;
+      }
     });
   </script>
 </body>
